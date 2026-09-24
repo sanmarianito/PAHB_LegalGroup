@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAHB | Abogada Inmobiliaria — Derecho de los Negocios, Inmobiliario y Urbanístico</title>
+  <!-- SEO: Title ≤60 chars para evitar truncamiento en SERPs -->
+  <title>Abogada Inmobiliaria y Derecho de Negocios | PAHB</title>
 
   <!-- SEO Meta -->
-  <meta name="description" content="PAHB — Equipo jurídico experto en Derecho Inmobiliario, Urbanístico y de los Negocios. Acompañamos a las empresas a tomar decisiones estratégicas e implementarlas de manera efectiva. Asesoría integral, litigios y reorganización empresarial.">
+  <!-- SEO: Description 140-155 chars para CTR óptimo en SERPs -->
+  <meta name="description" content="Abogada Inmobiliaria experta en Derecho Urbanístico y de Negocios. Asesoría integral, contratos, litigios y reorganización empresarial en Colombia.">
   <meta name="keywords" content="abogada inmobiliaria, derecho inmobiliario, derecho urbanístico, derecho de los negocios, asesoría jurídica empresarial, litigio comercial, reorganización empresarial, contratos inmobiliarios, propiedad horizontal, Paula Hernández Abogada, PAHB">
   <meta name="author" content="PAHB | Paula Hernández Abogada">
   <meta name="robots" content="index, follow">
@@ -62,7 +64,10 @@
   }
   </script>
 
-  <!-- Preload critical fonts -->
+  <!-- WPO: Preload del LCP (poster del video hero) para mejorar LCP score -->
+  <link rel="preload" as="image" href="img/poster.webp" type="image/webp" fetchpriority="high">
+
+  <!-- Preconnect a Google Fonts para reducir latencia de fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -91,14 +96,14 @@
     </div>
   </header>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación">
+  <!-- Mobile Menu: <nav> es semánticamente correcto para bloques de navegación -->
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Menú de navegación móvil" aria-hidden="true">
     <a href="#inicio">Inicio</a>
     <a href="#nosotros">Nosotros</a>
     <a href="#asesoria">Asesoría</a>
     <a href="#servicios">Servicios</a>
     <a href="#contacto">Contáctenos</a>
-  </div>
+  </nav>
 
   <main>
     <!-- ====== HERO ====== -->
@@ -110,7 +115,8 @@
       <div class="hero__overlay" aria-hidden="true"></div>
 
       <div class="hero__content">
-        <img class="hero__logo" src="img/Logo_dark-legal.svg" alt="PAHB — Abogada Inmobiliaria">
+        <!-- CLS: width/height explícitos para reservar espacio antes de cargar -->
+        <img class="hero__logo" src="img/Logo_dark-legal.svg" alt="PAHB — Abogada Inmobiliaria" width="470" height="" loading="eager" fetchpriority="high">
         <div class="hero__intro">
           <h1 class="hero__title">Derecho <br>de los Negocios<br>Derecho Inmobiliario y Urbanístico</h1>
           <p class="hero__subtitle">Acompañamos integralmente a las empresas a tomar decisiones estratégicas y a implementarlas de manera efectiva.</p>
@@ -357,7 +363,8 @@
         <div class="footer__info reveal--left">
           <div>
             <a href="#inicio" class="footer__logo" aria-label="PAHB — Inicio">
-              <img src="img/Logo_dark-legal.svg" alt="PAHB Logo">
+              <!-- CLS: dimensiones explícitas en logo del footer -->
+              <img src="img/Logo_dark-legal.svg" alt="PAHB — Abogada Inmobiliaria" width="160" height="58" loading="lazy">
             </a>
           </div>
 
@@ -433,6 +440,7 @@
     <img src="img/icon_ws.svg" alt="WhatsApp" width="28" height="28">
   </a>
 
-  <script src="main.js"></script>
+  <!-- INP: defer garantiza que el script no bloquee el hilo principal -->
+  <script src="main.js" defer></script>
 </body>
 </html>

@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const isActive = hamburger.classList.toggle('active');
     mobileMenu.classList.toggle('active');
     hamburger.setAttribute('aria-expanded', isActive);
+    // A11y: ocultar/mostrar el menú nav para lectores de pantalla
+    mobileMenu.setAttribute('aria-hidden', !isActive);
     document.body.style.overflow = isActive ? 'hidden' : '';
   });
 
@@ -48,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
       hamburger.classList.remove('active');
       mobileMenu.classList.remove('active');
       hamburger.setAttribute('aria-expanded', 'false');
+      // A11y: volver a ocultar el nav del menú móvil
+      mobileMenu.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     });
   });
