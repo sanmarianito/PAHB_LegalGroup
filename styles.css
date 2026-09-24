@@ -353,7 +353,7 @@ section {
 }
 
 @media (min-width: 971px) {
-  .hero__logo { width: 500px; 
+  .hero__logo { width: 340px; 
   margin-bottom: 0px;}
 }
 .hero__intro {
