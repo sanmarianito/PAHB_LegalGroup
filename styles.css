@@ -2,7 +2,16 @@
    PAHB — Justice & Precision Design System
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+/* Open Sans autoalojada (variable 400–700, subconjunto latin: cubre español).
+   Se precarga desde el <head>; sin @import para no bloquear el render. */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/open-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 /* --- Design Tokens --- */
 :root {
@@ -344,7 +353,7 @@ section {
 }
 
 @media (min-width: 971px) {
-  .hero__logo { width: 326px; 
+  .hero__logo { width: 500px; 
   margin-bottom: 0px;}
 }
 .hero__intro {
@@ -353,11 +362,9 @@ section {
   gap: 24px;
   align-items: left;
   justify-content: left;
-  animation: fadeUp 1s ease 0.6s both;
 }
 .hero__title {
   margin-bottom: 20px;
-  animation: fadeUp 1s ease 0.6s both;
 }
 
 .hero__kicker {
@@ -374,15 +381,13 @@ section {
   font-size: 16px;
   color: var(--secondary);
   max-width: 600px;
-  animation: fadeUp 1s ease 0.8s both;
 }
 
 @media (min-width: 971px) {
   .hero__subtitle { font-size: 18px; }
 }
 
-.hero__cta { animation: fadeUp 1s ease 1s both;
-  align-self: center; }
+.hero__cta { align-self: center; }
 @media (min-width: 971px) {
   .hero__cta { align-self: flex-start; }}
 
@@ -932,11 +937,6 @@ section {
 /* ============================================
    KEYFRAMES (time-based — hero only)
    ============================================ */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes fadeDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }

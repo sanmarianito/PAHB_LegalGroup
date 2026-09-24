@@ -10,7 +10,7 @@
 |---|---|---|---|
 | SEO técnico | 22% | 55 | Sin robots.txt ni sitemap; www y un espejo en GitHub Pages sirven contenido duplicado; URLs antiguas en 404 |
 | Calidad de contenido / E-E-A-T | 23% | 40 | Una sola página; no hay bio de la abogada, credenciales, ciudad ni casos; sin blog ni FAQ |
-| On-page | 20% | 60 | Title y description correctos; H1 sin palabra clave de intención ni ubicación; enlace de LinkedIn roto |
+| On-page | 20% | 60 | Title y description correctos; H1 sin palabra clave de intención ni ubicación; enlace dehero__kicker LinkedIn roto |
 | Schema / datos estructurados | 10% | 45 | Existe `LegalService`, pero sin dirección, logo ni `Person`, y con imagen relativa |
 | Rendimiento (CWV) | 10% | 55 | Lighthouse móvil 63: LCP 9,3 s, FCP 3,8 s, CLS 0, TBT 0 ms |
 | Preparación para búsqueda con IA | 10% | 35 | Sin llms.txt, sin FAQ, sin datos citables ni autoría |

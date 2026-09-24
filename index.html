@@ -78,12 +78,11 @@
   <!-- WPO: Preload del LCP (poster del video hero) para mejorar LCP score -->
   <link rel="preload" as="image" href="img/poster.webp" type="image/webp" fetchpriority="high">
 
-  <!-- Preconnect a Google Fonts para reducir latencia de fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fuente autoalojada: preload para que esté lista en el primer render -->
+  <link rel="preload" href="fonts/open-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="styles.css?v=20260924">
+  <link rel="stylesheet" href="styles.css?v=20260924c">
 </head>
 
 <body class="noise">
