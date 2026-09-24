@@ -338,6 +338,7 @@ section {
 
 .hero__logo {
   width: 60%;
+  height: auto;
   margin-block: 30px;
   animation: fadeDown 1s ease 0.3s both;
 }
@@ -357,6 +358,16 @@ section {
 .hero__title {
   margin-bottom: 20px;
   animation: fadeUp 1s ease 0.6s both;
+}
+
+.hero__kicker {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary-container);
+  margin-bottom: 12px;
 }
 
 .hero__subtitle {
@@ -806,6 +817,18 @@ section {
 
 .form__submit { align-self: flex-start; }
 
+.form__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--secondary);
+  cursor: pointer;
+}
+.form__consent input { margin-top: 3px; accent-color: var(--primary-container); flex-shrink: 0; }
+.form__consent a,
+.footer__bottom a { color: var(--primary-container); text-decoration: underline; }
+
 /* Footer bottom */
 .footer__bottom {
   margin-top: 60px;
@@ -1007,3 +1030,22 @@ input:-internal-autofill-selected {
     to   { opacity: 0; }
   }
 }
+/* ============================================
+   PÁGINAS SIMPLES (404, política de datos)
+   ============================================ */
+.page-simple { min-height: 100vh; display: flex; flex-direction: column; }
+.page-simple__header { padding: 24px 0; border-bottom: 1px solid var(--surface-container-highest); }
+.page-simple__header img { height: 48px; width: auto; }
+.page-simple main { flex: 1; padding: 64px 0; }
+.page-simple .footer__bottom { margin-top: 0; }
+
+.legal { max-width: 760px; }
+.legal h1 { margin-bottom: 8px; }
+.legal h2 { font-size: 22px; margin: 40px 0 12px; }
+.legal ul { list-style: disc; padding-left: 20px; margin-bottom: 16px; }
+.legal li { color: var(--secondary); line-height: 1.75; margin-bottom: 6px; }
+.legal a { color: var(--primary-container); text-decoration: underline; overflow-wrap: anywhere; }
+.legal__meta { font-size: 14px; color: var(--text-placeholder); }
+
+.notfound { text-align: center; }
+.notfound .btn { margin-top: 16px; }
