@@ -2,6 +2,8 @@
 
 Ordenado por impacto y esfuerzo. Los detalles de cada hallazgo están en `FULL-AUDIT-REPORT.md`.
 
+> **Leyenda:** ~~tachado~~ ✅ = hecho y verificado en vivo (24-sep-2026) · 🟡 = parcial · 👤 = lo hace el propietario de la firma.
+
 > **Contexto confirmado:** la firma atiende en **Medellín**. Ya existe un perfil de Google Business, pero hoy no se tiene acceso.
 > **Pendiente:** la dirección exacta tal como aparece en ese perfil. El nombre, la dirección y el teléfono (NAP) del sitio deben coincidir letra por letra con los del perfil.
 
@@ -9,7 +11,9 @@ Ordenado por impacto y esfuerzo. Los detalles de cada hallazgo están en `FULL-A
 
 ## Fase 1 — Correcciones críticas (semana 1)
 
-### 1.1 Crear `.htaccess` en la raíz (Hostinger lo respeta)
+### ~~1.1 Crear `.htaccess` en la raíz (Hostinger lo respeta)~~ ✅
+> Publicado. La versión final está en el repo (`/.htaccess`): une HTTPS + www en una regla, usa `RewriteRule … [NE]` para que el `#` de las anclas no se codifique y añade caché para `.woff2`. El bloque siguiente es la propuesta original.
+
 ```apache
 RewriteEngine On
 # www -> dominio raíz
@@ -39,40 +43,47 @@ ErrorDocument 404 /404.html
 ```
 Cuando existan páginas propias por servicio (Fase 2), cambiar esas redirecciones para que apunten a ellas.
 
-### 1.2 Eliminar el duplicado de GitHub Pages
+### 1.2 Eliminar el duplicado de GitHub Pages ⏳
+> **Pendiente:** `https://sanmarianito.github.io/PAHB/` seguía respondiendo 200 el 24-sep-2026.
+
 En el repo `sanmarianito/PAHB`, desactivar GitHub Pages (Settings → Pages → None) o reemplazar sus HTML por uno con
 `<meta name="robots" content="noindex">` + `<link rel="canonical" href="https://pahbabogada.com/">` + `<meta http-equiv="refresh" content="0; url=https://pahbabogada.com/">`.
 
-### 1.3 `robots.txt` y `sitemap.xml`
+### ~~1.3 `robots.txt` y `sitemap.xml`~~ ✅
 ```
 User-agent: *
 Allow: /
 Sitemap: https://pahbabogada.com/sitemap.xml
 ```
-Hacer un sitemap con la home ahora y ampliarlo con cada página nueva.
+~~Hacer un sitemap con la home ahora~~ (incluye la home y la política de datos) y ampliarlo con cada página nueva.
 
-### 1.4 Google Search Console y Bing Webmaster
-Verificar el dominio (propiedad de tipo *Dominio*), enviar el sitemap y pedir indexación de la home para que Google cambie el title viejo que muestra de www.
+### 1.4 Google Search Console y Bing Webmaster ✅
+~~Verificar el dominio (propiedad de tipo *Dominio*)~~ ✅ (registro TXT `google-site-verification` presente en el DNS), ~~enviar el sitemap y pedir indexación de la home para que Google cambie el title viejo que muestra de www~~ ✅. ~~Registrar también el sitio en Bing Webmaster Tools (se puede importar desde Search Console)~~ ✅.
 
-### 1.5 Dominio con el nombre de la abogada
+**IndexNow** (Bing, Yandex, Naver, Seznam, Yep; Google no lo usa): la clave está en `/4a6863c10e2d4bee382fdb32ed3a63d8.txt`, en la raíz del sitio. Cada vez que se publique o cambie una página, hay que correr `scripts/indexnow.sh` (sin argumentos envía todo el sitemap; también se le pueden pasar URLs sueltas).
+
+### 1.5 Dominio con el nombre de la abogada 👤
 En el DNS de `paulahernandezabogada.com` (Google Domains/Squarespace), configurar reenvío 301 a `https://pahbabogada.com/`. **No tocar los registros MX**, que sostienen el correo.
 
-### 1.6 Arreglos en `index.html` (15 min)
-- LinkedIn: cambiar `href="#"` por la URL real, o quitar el ícono.
-- Schema: `"image": "https://pahbabogada.com/img/thumbnail.png"`.
-- `hero__logo`: poner `height` real (o quitarlo junto con `width` y dejar solo CSS).
-- Quitar `<meta name="keywords">`.
+> 👤 **Esta acción la hará el propietario de la firma.** El dominio está registrado en Squarespace Domains y probablemente se compró junto con Google Workspace, así que solo se puede administrar desde la cuenta administradora: admin.google.com → Cuenta → Dominios → Administrar dominios → `paulahernandezabogada.com` → Administrar dominio → DNS → Reenvío de dominio. Crear dos reglas (`@` y `www`) → `https://pahbabogada.com`, permanente (301), con reenvío de ruta. Cuando esté hecho, verificar las redirecciones y que los MX sigan intactos.
 
-### 1.7 Política de tratamiento de datos (Ley 1581 de 2012)
-Crear `/politica-de-privacidad.html` y agregar al formulario un checkbox obligatorio de autorización con enlace a esa política. Enlazarla también desde el footer.
+### ~~1.6 Arreglos en `index.html` (15 min)~~ ✅
+- ~~LinkedIn: cambiar `href="#"` por la URL real, o quitar el ícono.~~ Se quitó el ícono; volver a ponerlo cuando haya URL de LinkedIn.
+- ~~Schema: `"image": "https://pahbabogada.com/img/thumbnail.png"`.~~
+- ~~`hero__logo`: poner `height` real (o quitarlo junto con `width` y dejar solo CSS).~~ `height="311"` + `height: auto` en CSS; tamaño visual idéntico al original.
+- ~~Quitar `<meta name="keywords">`.~~
+- ~~Versionar el CSS (`styles.css?v=…`)~~ por la caché de 7 días de Hostinger. Cambiar el número en cada modificación del CSS.
+
+### ~~1.7 Política de tratamiento de datos (Ley 1581 de 2012)~~ ✅
+~~Crear `/politica-de-privacidad.html` y agregar al formulario un checkbox obligatorio de autorización con enlace a esa política. Enlazarla también desde el footer.~~ También se creó `404.html` propia (devuelve un 404 real, con `noindex`).
 
 ---
 
 ## Fase 2 — Mejoras de alto impacto (semanas 2–3)
 
-### 2.1 Rendimiento (objetivo: LCP < 2,5 s en móvil)
-1. **Hero sin opacidad inicial:** quitar `animation: fadeUp` de `.hero__title` y `.hero__subtitle`, o animar solo `transform` (no `opacity`) para que el H1 cuente como LCP desde el primer render.
-2. **Fuentes:** quitar el `@import` de `styles.css` y en el `<head>` poner `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">`, con solo los pesos que se usan. Mejor aún: autoalojar el woff2 y hacer `preload`.
+### 2.1 Rendimiento (objetivo: LCP < 2,5 s en móvil) 🟡
+1. ~~**Hero sin opacidad inicial:** quitar `animation: fadeUp` de `.hero__title` y `.hero__subtitle`, o animar solo `transform` (no `opacity`) para que el H1 cuente como LCP desde el primer render.~~ ✅ Se quitó la animación del título, el subtítulo, el intro y el CTA; **el logo conserva su `fadeDown`** por decisión de diseño. El H1 ya es el elemento LCP.
+2. ~~**Fuentes:** quitar el `@import` de `styles.css` y en el `<head>` poner `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap">`, con solo los pesos que se usan. Mejor aún: autoalojar el woff2 y hacer `preload`.~~ ✅ Open Sans variable (400–700, latin) autoalojada en `fonts/open-sans-latin.woff2` con `preload`. Lighthouse local: Performance 73 → 96, LCP 4,7 s → 2,7 s.
 3. **Separador:** no precargar los 100 frames en `DOMContentLoaded`. Empezar la carga cuando el `IntersectionObserver` detecte que la sección está a unos 1000 px; convertir los frames a WebP a 960 px de ancho (≈ −70 % de peso) o reducirlos a 50.
 4. **Video de escritorio:** recomprimir `intro__desktop.mp4` (8,7 MB) a ≤ 2 MB con H.264 CRF 28 a 1280 px, o servir WebM/AV1. Añadir `preload="none"` o `metadata`.
 5. Añadir `apple-touch-icon` de 180×180 y un favicon de 48×48 o más.
@@ -90,22 +101,23 @@ Pasar de una sola página a un sitio multipágina. Estructura propuesta:
 | `/derecho-societario-comercial/` | abogado societario Medellín / contratos comerciales | Constitución, reformas, fusiones, actas (Cámara de Comercio de Medellín) |
 | `/reorganizacion-empresarial/` | reorganización empresarial Ley 1116 Medellín | Insolvencia, liquidación, negociación de deudas (Supersociedades, Intendencia Medellín) |
 | `/litigio-y-cobro-de-cartera/` | cobro de cartera empresas Medellín | Proceso, honorarios por éxito, ejecución de garantías |
-
-Usar "Medellín" en la keyword principal sin forzarla en cada párrafo. Mencionar el Valle de Aburrá (Envigado, Sabaneta, Itagüí, Bello, Rionegro) solo si de verdad atienden allí.
-
-**Home — title y H1 propuestos:**
-- Title: `Abogada Inmobiliaria en Medellín | Derecho Urbanístico y de Negocios | PAHB` (~70 caracteres; si se prefiere ≤60: `Abogada Inmobiliaria en Medellín | PAHB`)
-- Meta description: `Asesoría jurídica inmobiliaria, urbanística y empresarial en Medellín: contratos, propiedad horizontal, licencias y reorganización. Agende su consulta.`
-- H1: `Abogada inmobiliaria y de los negocios en Medellín`
 | `/paula-hernandez/` | Paula Hernández abogada | Bio, formación, T.P., trayectoria, foto profesional |
 | `/honorarios/` o sección FAQ | cuánto cobra un abogado inmobiliario | Las 5 modalidades explicadas |
 | `/contacto/` | — | Formulario, mapa, horario, WhatsApp |
 
+Usar "Medellín" en la keyword principal sin forzarla en cada párrafo. Mencionar el Valle de Aburrá (Envigado, Sabaneta, Itagüí, Bello, Rionegro) solo si de verdad atienden allí.
+
+**~~Home — title y H1 propuestos~~** ✅ (ya en vivo):
+- ~~Title~~: quedó `Abogada Inmobiliaria en Medellín y Derecho de Negocios | PAHB` (61 caracteres).
+- ~~Meta description: `Asesoría jurídica inmobiliaria, urbanística y empresarial en Medellín: contratos, propiedad horizontal, licencias y reorganización. Agende su consulta.`~~
+- ~~H1~~: se mantuvo el texto visual y se añadió dentro del H1 la línea "Abogada en Medellín" (`.hero__kicker`).
+- ~~Open Graph / Twitter~~ con Medellín.
+
 Cada página debe tener su title y description propios, un H1 con la keyword, 600–1.200 palabras, 3–5 preguntas frecuentes, un CTA, enlaces a los servicios relacionados y schema `Service` + `BreadcrumbList`.
 
-### 2.3 Schema ampliado (en la home)
+### 2.3 Schema ampliado (en la home) 🟡
 Grafo JSON-LD con `@id`:
-- `LegalService` con `address`, `geo`, `openingHoursSpecification`, `logo`, `image` absoluta, `founder` → Person, `hasOfferCatalog` con los 6 servicios y `sameAs` (Instagram, LinkedIn, Google Business).
+- `LegalService` con ~~`address`~~ (ciudad, región y país hechos; falta `streetAddress`), `geo`, `openingHoursSpecification`, ~~`logo`~~, ~~`image` absoluta~~, ~~`founder` → Person~~, ~~`areaServed` Medellín~~, `hasOfferCatalog` con los 6 servicios y `sameAs` (Instagram, LinkedIn, Google Business).
 - `Person` para Paula Hernández: `jobTitle`, `alumniOf`, `knowsAbout`, `sameAs` LinkedIn.
 - `WebSite` con `name` y `url`.
 
@@ -125,7 +137,7 @@ Grafo JSON-LD con `@id`:
 - Reseñas: pedirlas por WhatsApp con el enlace directo (meta: 10 en 60 días) y responder todas.
 
 **Mientras tanto, sin acceso al perfil:**
-- Poner "Medellín" en title, H1, footer, schema (`addressLocality: Medellín`, `addressRegion: Antioquia`, `addressCountry: CO`) y en la página de contacto con un mapa de Google embebido.
+- ~~Poner "Medellín" en title, H1, footer, schema (`addressLocality: Medellín`, `addressRegion: Antioquia`, `addressCountry: CO`)~~ ✅ y en la página de contacto con un mapa de Google embebido (pendiente: página de contacto).
 - Copiar la **URL pública del perfil** de Maps (se ve sin acceso) y agregarla al `sameAs` del schema y como enlace "Ver en Google Maps" en el footer.
 - Citaciones locales con el mismo NAP: Páginas Amarillas Colombia, Cylex, directorios de abogados, Cámara de Comercio de Medellín para Antioquia, Colegio de Abogados de Medellín (si hay membresía), Apple Business Connect y Bing Places (este último se puede importar desde Google cuando haya acceso).
 
